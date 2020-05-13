@@ -1,29 +1,30 @@
 import java.awt.EventQueue;
 import javax.swing.JFrame;
+import GameBoard.Board;
 
-public class Snake extends JFrame {
+public class AISwingSnake extends JFrame
+{
 
-    public Snake() {
-
+    public AISwingSnake()
+    {
         initUI();
     }
 
-    private void initUI() {
-
+    private void initUI()
+    {
         add(new Board());
-
         setResizable(false);
         pack();
 
-        setTitle("Snake");
+        setTitle("AI Swing Snake");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public static void main(String[] args) {
-
+    public static void runGame()
+    {
         EventQueue.invokeLater(() -> {
-            JFrame ex = new Snake();
+            JFrame ex = new AISwingSnake();
             ex.setVisible(true);
         });
     }

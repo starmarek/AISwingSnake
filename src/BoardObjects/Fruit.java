@@ -28,8 +28,8 @@ public class Fruit
 
     public void locateFruit()
     {
-        pos_X = (int) (Math.random() * Constants.RAND_POS) * Constants.DOT_SIZE;
-        pos_Y = (int) (Math.random() * Constants.RAND_POS) * Constants.DOT_SIZE;
+        pos_X = (int) (Math.random() * Constants.RAND_POS_FRUIT_X) * Constants.FRUIT_SIZE;
+        pos_Y = (int) (Math.random() * Constants.RAND_POS_FRUIT_Y) * Constants.FRUIT_SIZE;
     }
 
     public void draw(Graphics graphics, Board board)

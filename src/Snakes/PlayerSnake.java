@@ -37,10 +37,10 @@ public class PlayerSnake
 
     private void loadImages()
     {
-        ImageIcon tempBall = new ImageIcon("src/resources/dot.png");
+        ImageIcon tempBall = new ImageIcon("src/resources/snake_body_player.png");
         ball = tempBall.getImage();
 
-        ImageIcon tempHead = new ImageIcon("src/resources/head.png");
+        ImageIcon tempHead = new ImageIcon("src/resources/snake_head_player.png");
         head = tempHead.getImage();
     }
 

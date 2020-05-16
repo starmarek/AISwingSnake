@@ -13,6 +13,7 @@ public class EventAdapter extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent event)
     {
+
         int key = event.getKeyCode();
         if ((key == KeyEvent.VK_LEFT) && (!rightDirection))
         {

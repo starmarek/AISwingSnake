@@ -19,11 +19,13 @@ public class Board extends JPanel implements ActionListener {
 
     private boolean inGame = true;
     private Timer timer;
-    private final Fruit fruit = new Fruit();
-    private final PlayerSnake playerSnake = new PlayerSnake();
+    private final Fruit fruit;
+    private final PlayerSnake playerSnake;
 
     public Board()
     {
+        fruit = new Fruit();
+        playerSnake = new PlayerSnake();
         initBoard();
     }
 
@@ -32,7 +34,6 @@ public class Board extends JPanel implements ActionListener {
         addKeyListener(playerSnake.getEventAdapter());
         setBackground(Color.black);
         setFocusable(true);
-        setPreferredSize(new Dimension(Constants.B_WIDTH, Constants.B_HEIGHT));
         initGame();
     }
 

@@ -1,99 +1,53 @@
 package GameBoard;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
-import BoardObjects.Fruit;
 import Constants.*;
-import Snakes.*;
 
-public class Board extends JPanel implements ActionListener {
+public class Board extends JPanel {
 
-    private boolean inGame = true;
-    private Timer timer;
-    private final Fruit fruit;
-    private final PlayerSnake playerSnake;
+    private final GridBagConstraints gbc;
+    private final JPanel score_panel;
+    private final SnakePanel snake_panel;
+    GridBagLayout layout;
 
     public Board()
     {
-        fruit = new Fruit();
-        playerSnake = new PlayerSnake();
-        initBoard();
+        layout = new GridBagLayout();
+        score_panel = new JPanel();
+        snake_panel = new SnakePanel();
+        gbc = new GridBagConstraints();
+        setLayout(layout);
+        initScorePanel();
+        initSnakePanel();
     }
 
-    private void initBoard()
+    private void initScorePanel()
     {
-        addKeyListener(playerSnake.getEventAdapter());
-        setBackground(Color.black);
-        setFocusable(true);
-        initGame();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.ipady = Constants.SCORE_PANEL_PADDING_HEIGHT;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        score_panel.setBackground(new Color(97, 73, 204));
+        add(score_panel, gbc);
     }
 
-    private void initGame()
+    private void initSnakePanel()
     {
-        fruit.locateFruit();
-        timer = new Timer(Constants.DELAY, this);
-        timer.start();
+        gbc.gridy = 1;
+        gbc.weighty = 1.0;
+        gbc.ipady = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+        snake_panel.setBackground(Color.black);
+        add(snake_panel, gbc);
+        snake_panel.initGame();
     }
 
-    @Override
-    public void paintComponent(Graphics graphics)
+    public void requestFocusInSnakePanel()
     {
-        super.paintComponent(graphics);
-        drawObjects(graphics);
-    }
-
-    private void drawObjects(Graphics graphics)
-    {
-        if (inGame)
-        {
-            fruit.draw(graphics, this);
-            playerSnake.draw(graphics,this);
-            Toolkit.getDefaultToolkit().sync();
-        }
-        else {
-            gameOver(graphics);
-        }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e)
-    {
-        if (inGame)
-        {
-            checkApple();
-            inGame = playerSnake.checkCollisionWithBoard();
-            if (!inGame) { timer.stop(); }
-            playerSnake.move();
-        }
-        repaint();
-    }
-
-    private void checkApple()
-    {
-        if ((playerSnake.getHeadPosX() == fruit.getFruitPosX()) && (playerSnake.getHeadPosY() == fruit.getFruitPosY()))
-        {
-            playerSnake.incrementDots();
-            fruit.locateFruit();
-        }
-    }
-
-    private void gameOver(Graphics graphics)
-    {
-        String msg = "Game Over";
-        Font small = new Font("Helvetica", Font.BOLD, 14);
-        FontMetrics metr = getFontMetrics(small);
-
-        graphics.setColor(Color.white);
-        graphics.setFont(small);
-        graphics.drawString(msg, (Constants.B_WIDTH - metr.stringWidth(msg)) / 2, Constants.B_HEIGHT / 2);
+        snake_panel.requestFocusInWindow();
     }
 }

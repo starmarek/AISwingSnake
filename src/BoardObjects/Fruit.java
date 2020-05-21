@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 import java.awt.*;
 
 import Constants.*;
-import GameBoard.Board;
+import GameBoard.SnakePanel;
 
 public class Fruit
 {
@@ -32,7 +32,7 @@ public class Fruit
         pos_Y = (int) (Math.random() * Constants.RAND_POS_FRUIT_Y) * Constants.FRUIT_SIZE;
     }
 
-    public void draw(Graphics graphics, Board board)
+    public void draw(Graphics graphics, SnakePanel board)
     {
         graphics.drawImage(fruitImage, getFruitPosX(), getFruitPosY(), board);
     }

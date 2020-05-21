@@ -21,7 +21,6 @@ public class AISwingSnake extends JFrame
         mainPanel = new JPanel(new CardLayout());
         mainPanel.add(new EntryScreen(), "entry");
         add(mainPanel);
-
         setResizable(false);
         setPreferredSize(new Dimension(Constants.B_WIDTH, Constants.B_HEIGHT));
         pack();
@@ -29,17 +28,16 @@ public class AISwingSnake extends JFrame
         setTitle("AI Swing Snake");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        requestFocusInWindow();
     }
 
     public static void gameOn()
     {
-        JPanel board = new Board();
+        Board board = new Board();
         mainPanel.removeAll();
         mainPanel.add(board, "board");
         mainPanel.revalidate();
         mainPanel.repaint();
-        board.requestFocusInWindow();
+        board.requestFocusInSnakePanel();
     }
 
     public static void runGame()

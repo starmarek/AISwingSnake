@@ -1,10 +1,10 @@
-package BoardObjects;
+package GameBoardObjects;
 
 import javax.swing.ImageIcon;
 import java.awt.*;
 
 import Constants.*;
-import GameBoard.SnakePanel;
+import GameBoardPanels.SnakePanel;
 
 public class Fruit
 {

@@ -1,4 +1,4 @@
-import AISwingSnake.AISwingSnake;
+import Frame.AISwingSnake;
 
 public class Main
 {

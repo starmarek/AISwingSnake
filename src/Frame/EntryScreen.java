@@ -1,7 +1,7 @@
-package EntryScreen;
+package Frame;
 
 import Constants.Constants;
-import AISwingSnake.*;
+import Frame.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +16,7 @@ public class EntryScreen extends JPanel implements ActionListener
     {
         setLayout(null);
         loadImages();
-        addItems();
+        addElements();
         setBackground(new Color(52, 203, 52));
     }
 
@@ -26,7 +26,7 @@ public class EntryScreen extends JPanel implements ActionListener
         image = tmp.getImage().getScaledInstance(Constants.LOGO_SIZE_X, Constants.LOGO_SIZE_Y, Image.SCALE_DEFAULT);
     }
 
-    private void addItems()
+    private void addElements()
     {
         JLabel pic = new JLabel(new ImageIcon(image));
         pic.setBounds(225, 50, Constants.LOGO_SIZE_X, Constants.LOGO_SIZE_Y);
@@ -43,6 +43,6 @@ public class EntryScreen extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        AISwingSnake.gameOn();
+        AISwingSnake.switchToGameBoard();
     }
 }

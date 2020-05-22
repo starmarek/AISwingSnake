@@ -1,10 +1,12 @@
 package Snakes;
 
 import Constants.*;
-import GameBoard.SnakePanel;
+import GameBoardPanels.SnakePanel;
 
 import javax.swing.ImageIcon;
 import java.awt.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 public class PlayerSnake
 {
@@ -14,9 +16,11 @@ public class PlayerSnake
     private int dotLength;
     private Image ball;
     private Image head;
+    private final PropertyChangeSupport changes;
 
     public PlayerSnake()
     {
+        changes = new PropertyChangeSupport(this);
         initSnake();
         loadImages();
     }
@@ -25,6 +29,12 @@ public class PlayerSnake
     public int getHeadPosY() { return y[0]; }
     public int getDotLength() { return dotLength; }
     public EventAdapter getEventAdapter() { return eventAdapter; }
+    public void setDotLength(int dotLength)
+    {
+        int oldLen = this.dotLength;
+        this.dotLength = dotLength;
+        changes.firePropertyChange("dotLength", oldLen, this.dotLength);
+    }
 
     private void initSnake()
     {
@@ -51,6 +61,8 @@ public class PlayerSnake
             x[z] = x[(z - 1)];
             y[z] = y[(z - 1)];
         }
+//        System.out.println(y[0]);
+//        System.out.println(Constants.SCORE_PANEL_HEIGHT);
 
         if (eventAdapter.getLeftDirection())  { x[0] -= Constants.DOT_SIZE; }
         if (eventAdapter.getRightDirection()) { x[0] += Constants.DOT_SIZE; }
@@ -84,8 +96,7 @@ public class PlayerSnake
             graphics.drawImage(ball, x[z], y[z], board);
     }
 
-    public void incrementDots()
-    {
-        ++dotLength;
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changes.addPropertyChangeListener(listener);
     }
 }

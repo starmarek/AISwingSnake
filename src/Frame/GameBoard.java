@@ -1,24 +1,33 @@
-package GameBoard;
+package Frame;
 
 import java.awt.*;
-import javax.swing.JPanel;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.*;
 
+import GameBoardPanels.ScorePanel;
+import GameBoardPanels.SnakePanel;
 import Constants.*;
 
-public class Board extends JPanel {
+public class GameBoard extends JPanel {
 
     private final GridBagConstraints gbc;
-    private final JPanel score_panel;
+    private final ScorePanel score_panel;
     private final SnakePanel snake_panel;
-    GridBagLayout layout;
 
-    public Board()
+    public GameBoard()
     {
-        layout = new GridBagLayout();
-        score_panel = new JPanel();
+        score_panel = new ScorePanel();
         snake_panel = new SnakePanel();
         gbc = new GridBagConstraints();
-        setLayout(layout);
+        snake_panel.addSnakeObjectPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt)
+            {
+                score_panel.getScore().setText(String.valueOf(snake_panel.getScore()));
+            }
+        });
+        setLayout(new GridBagLayout());
         initScorePanel();
         initSnakePanel();
     }
@@ -28,10 +37,9 @@ public class Board extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
-        gbc.ipady = Constants.SCORE_PANEL_PADDING_HEIGHT;
+        gbc.ipady = Constants.SCORE_PANEL_HEIGHT;
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        score_panel.setBackground(new Color(97, 73, 204));
         add(score_panel, gbc);
     }
 
@@ -41,9 +49,9 @@ public class Board extends JPanel {
         gbc.weighty = 1.0;
         gbc.ipady = 0;
         gbc.fill = GridBagConstraints.BOTH;
-        snake_panel.setBackground(Color.black);
         add(snake_panel, gbc);
-        snake_panel.initGame();
+
+        snake_panel.initStartAdapter();
     }
 
     public void requestFocusInSnakePanel()

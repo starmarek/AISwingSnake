@@ -1,10 +1,8 @@
-package AISwingSnake;
+package Frame;
 
 import java.awt.*;
 import javax.swing.*;
 
-import GameBoard.Board;
-import EntryScreen.EntryScreen;
 import Constants.*;
 
 public class AISwingSnake extends JFrame
@@ -19,7 +17,7 @@ public class AISwingSnake extends JFrame
     private void initUI()
     {
         mainPanel = new JPanel(new CardLayout());
-        mainPanel.add(new EntryScreen(), "entry");
+        mainPanel.add(new EntryScreen());
         add(mainPanel);
         setResizable(false);
         setPreferredSize(new Dimension(Constants.B_WIDTH, Constants.B_HEIGHT));
@@ -30,11 +28,11 @@ public class AISwingSnake extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public static void gameOn()
+    public static void switchToGameBoard()
     {
-        Board board = new Board();
+        GameBoard board = new GameBoard();
         mainPanel.removeAll();
-        mainPanel.add(board, "board");
+        mainPanel.add(board);
         mainPanel.revalidate();
         mainPanel.repaint();
         board.requestFocusInSnakePanel();

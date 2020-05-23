@@ -4,6 +4,7 @@ import GameBoardObjects.Fruit;
 import Constants.Constants;
 import GameBoardObjects.TimeDisplay;
 import Snakes.PlayerSnake;
+import Frame.AISwingSnake;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +16,7 @@ import java.beans.PropertyChangeListener;
 
 public class SnakePanel extends JPanel implements ActionListener
 {
-    private boolean gameHasEnded, inGame;
+    private boolean inGame;
     private final Timer timer;
     private final Fruit fruit;
     private final PlayerSnake playerSnake;
@@ -87,7 +88,7 @@ public class SnakePanel extends JPanel implements ActionListener
             checkApple();
             playerSnake.move();
             inGame = playerSnake.checkCollisionWithBoard();
-            if (!inGame) { timer.stop(); gameHasEnded = true; TimeDisplay.stopCountDown();}
+            if (!inGame) { timer.stop(); TimeDisplay.stopCountDown(); gameOver(); }
         }
         repaint();
     }
@@ -100,11 +101,6 @@ public class SnakePanel extends JPanel implements ActionListener
             playerSnake.draw(graphics,this);
             Toolkit.getDefaultToolkit().sync();
         }
-
-        if (gameHasEnded)
-        {
-            gameOver(graphics);
-        }
     }
 
     private void checkApple()
@@ -116,15 +112,23 @@ public class SnakePanel extends JPanel implements ActionListener
         }
     }
 
-    private void gameOver(Graphics graphics)
+    private void gameOver()
     {
-        String msg = "Game Over";
-        Font small = new Font("Helvetica", Font.BOLD, 22);
-        FontMetrics metr = getFontMetrics(small);
+        JLabel arrows_text = new JLabel("Game Over");
+        arrows_text.setBounds(275, 325, 700, 30);
+        arrows_text.setFont(new Font("Verdana", Font.BOLD, 40));
+        arrows_text.setForeground(Color.white);
+        add(arrows_text);
 
-        graphics.setColor(Color.white);
-        graphics.setFont(small);
-        graphics.drawString(msg, (Constants.B_WIDTH - metr.stringWidth(msg)) / 2, Constants.B_HEIGHT / 2);
+        Timer gameOverTimer = new Timer(1000, null);
+        gameOverTimer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameOverTimer.stop();
+                AISwingSnake.switchToGameOverScreen();
+            }
+        });
+        gameOverTimer.start();
     }
 
     public void initStartAdapter()

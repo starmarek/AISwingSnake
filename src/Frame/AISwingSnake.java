@@ -25,17 +25,27 @@ public class AISwingSnake extends JFrame
 
         setTitle("AI Swing Snake");
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     public static void switchToGameBoard()
     {
-        GameBoard board = new GameBoard();
+        GameBoard gameBoard = new GameBoard();
         mainPanel.removeAll();
-        mainPanel.add(board);
+        mainPanel.add(gameBoard);
         mainPanel.revalidate();
         mainPanel.repaint();
-        board.requestFocusInSnakePanel();
+        gameBoard.requestFocusInSnakePanel();
+    }
+
+    public static void switchToGameOverScreen()
+    {
+        GameOverScreen gameOverScreen = new GameOverScreen();
+        mainPanel.removeAll();
+        mainPanel.add(gameOverScreen);
+        mainPanel.revalidate();
+        mainPanel.repaint();
+        gameOverScreen.requestFocusInWindow();
     }
 
     public static void runGame()

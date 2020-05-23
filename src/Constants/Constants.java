@@ -18,4 +18,6 @@ public final class Constants
     public static final int SCORE_APPLE_SIZE = 50;
     public static final int HINT_ARROWS_SIZE_X = 150;
     public static final int HINT_ARROWS_SIZE_Y = 100;
+    public static final int RIP_SNAKE_SIZE_Y = 275;
+    public static final int RIP_SNAKE_SIZE_X = 375;
 }

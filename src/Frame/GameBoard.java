@@ -1,6 +1,8 @@
 package Frame;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.*;
@@ -40,6 +42,14 @@ public class GameBoard extends JPanel {
         gbc.ipady = Constants.SCORE_PANEL_HEIGHT;
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        score_panel.addActionListenerToPauseButton(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                snake_panel.pauseGame();
+            }
+        });
         add(score_panel, gbc);
     }
 

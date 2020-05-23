@@ -2,6 +2,7 @@ package GameBoardPanels;
 
 import GameBoardObjects.Fruit;
 import Constants.Constants;
+import GameBoardObjects.TimeDisplay;
 import Snakes.PlayerSnake;
 
 import javax.swing.*;
@@ -19,8 +20,11 @@ public class SnakePanel extends JPanel implements ActionListener
     private final Fruit fruit;
     private final PlayerSnake playerSnake;
     private final KeyAdapter startAdapter;
+    private final KeyAdapter resumeAdapter;
     private JLabel arrows_pic;
     private JLabel arrows_text;
+    private JLabel pause_text;
+    private JLabel pause_hint;
     private Image arrows;
 
     public SnakePanel()
@@ -42,7 +46,22 @@ public class SnakePanel extends JPanel implements ActionListener
                     addKeyListener(playerSnake.getEventAdapter());
                     fruit.locateFruit();
                     timer.start();
+                    TimeDisplay.startCountDown(false);
                     inGame = true;
+                }
+            }
+        };
+        resumeAdapter = new KeyAdapter()
+        {
+            @Override
+            public void keyPressed(KeyEvent e)
+            {
+                int event = e.getKeyCode();
+                if (event == KeyEvent.VK_R)
+                {
+                    resumeGame();
+                    addKeyListener(playerSnake.getEventAdapter());
+                    removeKeyListener(resumeAdapter);
                 }
             }
         };
@@ -63,13 +82,12 @@ public class SnakePanel extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-//        System.out.println(e.getWhen());
         if (inGame)
         {
             checkApple();
             playerSnake.move();
             inGame = playerSnake.checkCollisionWithBoard();
-            if (!inGame) { timer.stop(); gameHasEnded = true;}
+            if (!inGame) { timer.stop(); gameHasEnded = true; TimeDisplay.stopCountDown();}
         }
         repaint();
     }
@@ -141,5 +159,37 @@ public class SnakePanel extends JPanel implements ActionListener
         arrows_text.setFont(new Font("Verdana", Font.BOLD, 30));
         arrows_text.setForeground(Color.white);
         add(arrows_text);
+    }
+
+    public void pauseGame()
+    {
+        if (!timer.isRunning())
+            return;
+        timer.stop();
+        TimeDisplay.stopCountDown();
+        removeKeyListener(playerSnake.getEventAdapter());
+
+        pause_text = new JLabel("GAME PAUSED");
+        pause_text.setBounds(200, 300, 600, 60);
+        pause_text.setFont(new Font("Verdana", Font.BOLD, 50));
+        pause_text.setForeground(Color.white);
+        add(pause_text);
+
+        pause_hint = new JLabel("Press r key to resume");
+        pause_hint.setBounds(225, 380, 700, 30);
+        pause_hint.setFont(new Font("Verdana", Font.BOLD, 30));
+        pause_hint.setForeground(Color.white);
+        add(pause_hint);
+
+        addKeyListener(resumeAdapter);
+        repaint();
+    }
+
+    public void resumeGame()
+    {
+        timer.start();
+        TimeDisplay.startCountDown(true);
+        remove(pause_text);
+        remove(pause_hint);
     }
 }

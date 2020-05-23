@@ -1,7 +1,6 @@
 package Frame;
 
 import Constants.Constants;
-import Frame.*;
 
 import javax.swing.*;
 import java.awt.*;

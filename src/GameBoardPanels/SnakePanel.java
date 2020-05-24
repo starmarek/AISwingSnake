@@ -1,7 +1,9 @@
 package GameBoardPanels;
 
+import GameBoardObjects.BaseBoardObjects;
 import GameBoardObjects.Fruit;
 import Constants.Constants;
+import GameBoardObjects.MapGenerator;
 import GameBoardObjects.TimeDisplay;
 import Snakes.PlayerSnake;
 import Frame.AISwingSnake;
@@ -20,6 +22,7 @@ public class SnakePanel extends JPanel implements ActionListener
     private final Timer timer;
     private final Fruit fruit;
     private final PlayerSnake playerSnake;
+    private final MapGenerator mapGenerator;
     private final KeyAdapter startAdapter;
     private final KeyAdapter resumeAdapter;
     private JLabel arrows_pic;
@@ -32,7 +35,9 @@ public class SnakePanel extends JPanel implements ActionListener
     {
         fruit = new Fruit();
         playerSnake = new PlayerSnake();
+        mapGenerator = new MapGenerator();
         timer = new Timer(Constants.DELAY, this);
+
         startAdapter = new KeyAdapter()
         {
             @Override
@@ -85,18 +90,36 @@ public class SnakePanel extends JPanel implements ActionListener
     {
         if (inGame)
         {
-            checkApple();
+            this.checkApple();
             playerSnake.move();
             inGame = playerSnake.checkCollisionWithBoard();
-            if (!inGame) { timer.stop(); TimeDisplay.stopCountDown(); gameOver(); }
+            this.checkCollisions();
+            if (!inGame)
+            {
+                timer.stop();
+                TimeDisplay.stopCountDown();
+                gameOver();
+            }
         }
         repaint();
+    }
+
+    public void checkCollisions()
+    {
+        Rectangle snake = playerSnake.getBounds();
+        for(BaseBoardObjects obstacle : mapGenerator.getObstaclesList())
+        {
+            Rectangle obstacleRect = obstacle.getBounds();
+            if(snake.intersects(obstacleRect))
+                inGame = false;
+        }
     }
 
     private void drawObjects(Graphics graphics)
     {
         if (inGame)
         {
+            mapGenerator.drawMap(graphics, this);
             fruit.draw(graphics, this);
             playerSnake.draw(graphics,this);
             Toolkit.getDefaultToolkit().sync();
@@ -105,7 +128,7 @@ public class SnakePanel extends JPanel implements ActionListener
 
     private void checkApple()
     {
-        if ((playerSnake.getHeadPosX() == fruit.getFruitPosX()) && (playerSnake.getHeadPosY() == fruit.getFruitPosY()))
+        if ((playerSnake.getHeadPosX() == fruit.getPosX()) && (playerSnake.getHeadPosY() == fruit.getPosY()))
         {
             playerSnake.setDotLength(playerSnake.getDotLength() + 1);
             fruit.locateFruit();

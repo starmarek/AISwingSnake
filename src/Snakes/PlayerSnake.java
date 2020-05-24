@@ -12,10 +12,10 @@ public class PlayerSnake
 {
     private final int[] x = new int[Constants.B_WIDTH];
     private final int[] y = new int[Constants.B_HEIGHT];
-    private final EventAdapter eventAdapter = new EventAdapter();
     private int dotLength;
     private Image ball;
     private Image head;
+    private final EventAdapter eventAdapter = new EventAdapter();
     private final PropertyChangeSupport changes;
 
     public PlayerSnake()
@@ -29,11 +29,9 @@ public class PlayerSnake
     public int getHeadPosY() { return y[0]; }
     public int getDotLength() { return dotLength; }
     public EventAdapter getEventAdapter() { return eventAdapter; }
-    public void setDotLength(int dotLength)
+    public Rectangle getBounds()
     {
-        int oldLen = this.dotLength;
-        this.dotLength = dotLength;
-        changes.firePropertyChange("dotLength", oldLen, this.dotLength);
+        return new Rectangle(getHeadPosX(), getHeadPosY(), 10, 10);
     }
 
     private void initSnake()
@@ -55,14 +53,19 @@ public class PlayerSnake
         head = tempHead.getImage();
     }
 
+    public void setDotLength(int dotLength)
+    {
+        int oldLen = this.dotLength;
+        this.dotLength = dotLength;
+        changes.firePropertyChange("dotLength", oldLen, this.dotLength);
+    }
+
     public void move() {
         for (int z = dotLength; z > 0; z--)
         {
             x[z] = x[(z - 1)];
             y[z] = y[(z - 1)];
         }
-//        System.out.println(y[0]);
-//        System.out.println(Constants.SCORE_PANEL_HEIGHT);
 
         if (eventAdapter.getLeftDirection())  { x[0] -= Constants.DOT_SIZE; }
         if (eventAdapter.getRightDirection()) { x[0] += Constants.DOT_SIZE; }
@@ -75,9 +78,7 @@ public class PlayerSnake
         for (int z = dotLength; z > 0; z--)
         {
             if ((z > 4) && (getHeadPosX() == x[z]) && (getHeadPosY() == y[z]))
-            {
                 return false;
-            }
         }
 
         if (getHeadPosY() >= Constants.B_HEIGHT - Constants.SCORE_PANEL_HEIGHT) { return false; }
@@ -85,7 +86,6 @@ public class PlayerSnake
         if (getHeadPosX() >= Constants.B_WIDTH) { return false; }
         if (getHeadPosX() < 0) { return false; }
 
-        //return true if collision was not detected
         return true;
     }
 
@@ -96,7 +96,8 @@ public class PlayerSnake
             graphics.drawImage(ball, x[z], y[z], board);
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
+    public void addPropertyChangeListener(PropertyChangeListener listener)
+    {
         changes.addPropertyChangeListener(listener);
     }
 }

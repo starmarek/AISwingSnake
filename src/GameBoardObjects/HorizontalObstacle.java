@@ -4,8 +4,8 @@ import java.awt.*;
 
 public class HorizontalObstacle extends BaseBoardObjects
 {
-    private final int width = 250;
-    private final int height = 30;
+    private int width;
+    private int height;
 
     public HorizontalObstacle()
     {
@@ -17,6 +17,8 @@ public class HorizontalObstacle extends BaseBoardObjects
     {
         pos_X = randNumber(5, 50);
         pos_Y = randNumber(45, 70);
+        width = image.getWidth(null);
+        height = image.getHeight(null);
     }
 
     public Rectangle getBounds()

@@ -5,8 +5,8 @@ import java.awt.*;
 class VerticalObstacle extends BaseBoardObjects
 {
     private static int counter;
-    private final int width = 30;
-    private final int height = 250;
+    private int width;
+    private int height;
 
     public VerticalObstacle()
     {
@@ -16,6 +16,13 @@ class VerticalObstacle extends BaseBoardObjects
     }
 
     private void init()
+    {
+        width = image.getWidth(null);
+        height = image.getHeight(null);
+        initCords();
+    }
+
+    private void initCords()
     {
         pos_Y = randNumber(5, 30);
         if(counter % 2 == 0)

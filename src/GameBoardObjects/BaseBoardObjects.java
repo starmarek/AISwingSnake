@@ -10,7 +10,7 @@ public class BaseBoardObjects
 {
     protected int pos_X;
     protected int pos_Y;
-    private Image image;
+    protected Image image;
 
     public BaseBoardObjects() { }
 

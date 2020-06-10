@@ -146,6 +146,7 @@ public class SnakePanel extends JPanel implements ActionListener
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameOverTimer.stop();
+                AISwingSnake.saveScore(getScore());
                 AISwingSnake.switchToGameOverScreen();
             }
         });

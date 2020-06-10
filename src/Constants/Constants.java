@@ -19,4 +19,6 @@ public final class Constants
     public static final int HINT_ARROWS_SIZE_Y = 100;
     public static final int RIP_SNAKE_SIZE_Y = 275;
     public static final int RIP_SNAKE_SIZE_X = 375;
+    public static final int TROPHY_SIZE_X = 200;
+    public static final int TROPHY_SIZE_Y = 200;
 }

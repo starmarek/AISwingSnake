@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 public class EntryScreen extends JPanel implements ActionListener
 {
     private Image image;
+    private JTextField nickField;
 
     public EntryScreen()
     {
@@ -32,16 +33,33 @@ public class EntryScreen extends JPanel implements ActionListener
         add(pic);
 
         JButton start_button = new JButton("<html><p style='font-size:20px; color:white'>Start game</p></html>");
-        start_button.setBounds(240, 550, 320, 100);
+        start_button.setBounds(240, 600, 320, 100);
         start_button.setBackground(new Color(97, 73, 204));
         start_button.setFocusable(false);
         start_button.addActionListener(this);
         add(start_button);
+
+        JLabel nick = new JLabel("<html><p style='font-size:20px; color:black'>Nickname: </p></html>");
+        nick.setBounds(70, 500, 200, 50);
+        add(nick);
+
+        nickField = new JTextField();
+        nickField.addActionListener(this);
+        nickField.setFont(new Font("Verdana", Font.BOLD, 30));
+        nickField.setForeground(Color.black);
+        nickField.setBounds(240, 500, 320, 50);
+        add(nickField);
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        if (nickField.getText().isEmpty())
+        {
+            nickField.setBackground(Color.red);
+            return;
+        }
+        AISwingSnake.playerNickname = nickField.getText();
         AISwingSnake.switchToGameBoard();
     }
 }

@@ -30,14 +30,21 @@ public class GameOverScreen extends JPanel
         add(snake_pic);
 
         JButton retry = new JButton("<html><p style='font-size:20px; color:black'>Play again</p></html>");
-        retry.setBounds(255, 450, 300 ,100);
+        retry.setBounds(255, 430, 300 ,100);
         retry.setFocusable(false);
         retry.addActionListener(e -> AISwingSnake.switchToGameBoard());
         retry.setBackground(new Color(52, 203, 52));
         add(retry);
 
+        JButton leaderboard = new JButton("<html><p style='font-size:20px; color:black'>Leader Board</p></html>");
+        leaderboard.setBounds(255, 550, 300 ,100);
+        leaderboard.setFocusable(false);
+        leaderboard.addActionListener(e -> AISwingSnake.switchToLeaderBoardScreen());
+        leaderboard.setBackground(new Color(52, 203, 52));
+        add(leaderboard);
+
         JButton exit = new JButton("<html><p style='font-size:20px; color:black'>Quit game</p></html>");
-        exit.setBounds(255, 570, 300 ,100);
+        exit.setBounds(255, 670, 300 ,100);
         exit.setFocusable(false);
         exit.addActionListener(e -> System.exit(0));
         exit.setBackground(new Color(52, 203, 52));

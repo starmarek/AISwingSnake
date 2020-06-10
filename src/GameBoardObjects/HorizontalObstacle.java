@@ -1,12 +1,7 @@
 package GameBoardObjects;
 
-import java.awt.*;
-
 public class HorizontalObstacle extends BaseBoardObjects
 {
-    private int width;
-    private int height;
-
     public HorizontalObstacle()
     {
         loadImage("src/resources/obstacle25x3.png");
@@ -19,10 +14,5 @@ public class HorizontalObstacle extends BaseBoardObjects
         pos_Y = randNumber(45, 70);
         width = image.getWidth(null);
         height = image.getHeight(null);
-    }
-
-    public Rectangle getBounds()
-    {
-        return new Rectangle(pos_X, pos_Y, width, height);
     }
 }

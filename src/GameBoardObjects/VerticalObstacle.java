@@ -1,12 +1,8 @@
 package GameBoardObjects;
 
-import java.awt.*;
-
 class VerticalObstacle extends BaseBoardObjects
 {
     private static int counter;
-    private int width;
-    private int height;
 
     public VerticalObstacle()
     {
@@ -29,10 +25,5 @@ class VerticalObstacle extends BaseBoardObjects
             pos_X = randNumber(5, 35);
         else
             pos_X = randNumber(45, 70);
-    }
-
-    public Rectangle getBounds()
-    {
-        return new Rectangle(pos_X, pos_Y, width, height);
     }
 }

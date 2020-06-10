@@ -10,6 +10,8 @@ public class BaseBoardObjects
 {
     protected int pos_X;
     protected int pos_Y;
+    protected int width = Constants.DOT_SIZE;
+    protected int height = Constants.DOT_SIZE;
     protected Image image;
 
     public BaseBoardObjects() { }
@@ -35,6 +37,6 @@ public class BaseBoardObjects
 
     public Rectangle getBounds()
     {
-        return new Rectangle(pos_X,pos_Y, Constants.DOT_SIZE,Constants.DOT_SIZE);
+        return new Rectangle(pos_X, pos_Y, width, height);
     }
 }

@@ -1,8 +1,9 @@
 package GameBoardPanels;
 
+import Constants.Constants;
+import GameBoardObjects.Frog;
 import GameBoardObjects.BaseBoardObjects;
 import GameBoardObjects.Fruit;
-import Constants.Constants;
 import GameBoardObjects.MapGenerator;
 import GameBoardObjects.TimeDisplay;
 import Snakes.PlayerSnake;
@@ -21,6 +22,7 @@ public class SnakePanel extends JPanel implements ActionListener
     private boolean inGame;
     private final Timer timer;
     private final Fruit fruit;
+    private final Frog frog;
     private final PlayerSnake playerSnake;
     private final MapGenerator mapGenerator;
     private final KeyAdapter startAdapter;
@@ -34,6 +36,7 @@ public class SnakePanel extends JPanel implements ActionListener
     public SnakePanel()
     {
         fruit = new Fruit();
+        frog = new Frog();
         playerSnake = new PlayerSnake();
         mapGenerator = new MapGenerator();
         timer = new Timer(Constants.DELAY, this);
@@ -50,7 +53,8 @@ public class SnakePanel extends JPanel implements ActionListener
                     remove(arrows_pic);
                     remove(arrows_text);
                     addKeyListener(playerSnake.getEventAdapter());
-                    fruit.locateFruit();
+                    fruit.locate(mapGenerator.getObstaclesList());
+                    frog.locate(mapGenerator.getObstaclesList());
                     timer.start();
                     TimeDisplay.startCountDown(false);
                     inGame = true;
@@ -90,7 +94,9 @@ public class SnakePanel extends JPanel implements ActionListener
     {
         if (inGame)
         {
-            this.checkApple();
+            fruit.check(playerSnake, mapGenerator.getObstaclesList());
+            frog.check(playerSnake, mapGenerator.getObstaclesList());
+            frog.move(playerSnake.getBounds());
             playerSnake.move();
             inGame = playerSnake.checkCollisionWithBoard();
             this.checkCollisions();
@@ -121,17 +127,9 @@ public class SnakePanel extends JPanel implements ActionListener
         {
             mapGenerator.drawMap(graphics, this);
             fruit.draw(graphics, this);
+            frog.draw(graphics, this);
             playerSnake.draw(graphics,this);
             Toolkit.getDefaultToolkit().sync();
-        }
-    }
-
-    private void checkApple()
-    {
-        if ((playerSnake.getHeadPosX() == fruit.getPosX()) && (playerSnake.getHeadPosY() == fruit.getPosY()))
-        {
-            playerSnake.setDotLength(playerSnake.getDotLength() + 1);
-            fruit.locateFruit();
         }
     }
 

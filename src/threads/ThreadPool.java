@@ -5,10 +5,9 @@ import java.util.List;
 
 public class ThreadPool extends ThreadGroup
 {
-    private int numberOfThreads;
+    private final int numberOfThreads;
     private boolean alive;
-    private List<Runnable> taskQueue;
-    private static IDAssigner poolID;
+    private final List<Runnable> taskQueue;
 
     public ThreadPool(int numberOfThreads)
     {
@@ -17,7 +16,6 @@ public class ThreadPool extends ThreadGroup
         this.numberOfThreads = numberOfThreads;
         this.alive = true;
         this.taskQueue = new LinkedList<Runnable>();
-        this.poolID = new IDAssigner(1);
         createThreads();
     }
 

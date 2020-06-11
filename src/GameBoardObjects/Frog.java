@@ -1,7 +1,5 @@
 package GameBoardObjects;
 
-import Snakes.PlayerSnake;
-
 import java.awt.*;
 import java.util.List;
 

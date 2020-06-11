@@ -18,10 +18,7 @@ public class Fruit extends BaseBoardObjects
         {
             Rectangle obstacleRect = obstacle.getBounds();
             if (obstacleRect.intersects(this.getBounds()))
-            {
-                System.out.print("XD");
                 return true;
-            }
         }
         return false;
     }

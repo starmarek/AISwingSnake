@@ -1,19 +1,24 @@
 package CSVReader;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class CSVReader
 {
-    private final String csvFile = "LeaderBoard.csv";
+    private final File csvFile;
     static ArrayList<ArrayList<String>> parsedFile;
     int maxNumberOfScores = 5;
 
     public CSVReader()
     {
+        csvFile = new File("LeaderBoard.csv");
+        try
+        {
+            csvFile.createNewFile();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
         parsedFile = new ArrayList<>();
         parseFile();
     }
@@ -41,6 +46,7 @@ public class CSVReader
         boolean playerExists = false;
         boolean playerScoreUpdated = false;
 
+        // Update player score if the player exists in the leaderboard AND if the score is better
         for  (int i = 0; i < parsedFile.size(); ++i)
         {
             if (parsedFile.get(i).get(0).equals(nick))

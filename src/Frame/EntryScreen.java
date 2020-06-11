@@ -1,10 +1,6 @@
 package Frame;
 
 import Constants.Constants;
-import threads.Test1;
-import threads.Test2;
-import threads.ThreadPool;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,11 +13,6 @@ public class EntryScreen extends JPanel implements ActionListener
 
     public EntryScreen()
     {
-        ThreadPool poolTest = new ThreadPool(2);
-        poolTest.runTask(new Test1());
-        poolTest.runTask(new Test2());
-        poolTest.join();
-
         setLayout(null);
         loadImages();
         addElements();

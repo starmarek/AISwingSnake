@@ -28,6 +28,17 @@ public class Frog extends Fruit
         }
     }
 
+    public Runnable createRunnable(Rectangle snakeRect)
+    {
+        Runnable tempRunnable = new Runnable() {
+            @Override
+            public void run() {
+                move(snakeRect);
+            }
+        };
+        return tempRunnable;
+    }
+
     public void move(Rectangle snakeRectangle)
     {
         int checkRand = randNumber(0,2) / 10;

@@ -1,7 +1,6 @@
 package GameBoardObjects;
 
 import GameBoardPanels.SnakePanel;
-import Snakes.PlayerSnake;
 
 import java.awt.*;
 import java.util.ArrayList;

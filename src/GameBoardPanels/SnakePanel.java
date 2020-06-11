@@ -8,6 +8,7 @@ import GameBoardObjects.MapGenerator;
 import GameBoardObjects.TimeDisplay;
 import Snakes.PlayerSnake;
 import Frame.AISwingSnake;
+import threads.ThreadPool;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,7 @@ import java.beans.PropertyChangeListener;
 public class SnakePanel extends JPanel implements ActionListener
 {
     private boolean inGame;
+    private final ThreadPool threadPool;
     private final Timer timer;
     private final Fruit fruit;
     private final Frog frog;
@@ -40,6 +42,7 @@ public class SnakePanel extends JPanel implements ActionListener
         playerSnake = new PlayerSnake();
         mapGenerator = new MapGenerator();
         timer = new Timer(Constants.DELAY, this);
+        threadPool = new ThreadPool(4);
 
         startAdapter = new KeyAdapter()
         {
@@ -96,8 +99,8 @@ public class SnakePanel extends JPanel implements ActionListener
         {
             fruit.check(playerSnake, mapGenerator.getObstaclesList());
             frog.check(playerSnake, mapGenerator.getObstaclesList());
-            frog.move(playerSnake.getBounds());
-            playerSnake.move();
+            threadPool.runTask(frog.createRunnable(playerSnake.getBounds()));
+            threadPool.runTask(playerSnake);
             inGame = playerSnake.checkCollisionWithBoard();
             this.checkCollisions();
             if (!inGame)

@@ -8,7 +8,7 @@ import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class PlayerSnake
+public class PlayerSnake implements Runnable
 {
     private final int[] x = new int[Constants.B_WIDTH];
     private final int[] y = new int[Constants.B_HEIGHT];
@@ -60,7 +60,8 @@ public class PlayerSnake
         changes.firePropertyChange("dotLength", oldLen, this.dotLength);
     }
 
-    public void move() {
+    @Override
+    public void run() {
         for (int z = dotLength; z > 0; z--)
         {
             x[z] = x[(z - 1)];

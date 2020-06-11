@@ -101,7 +101,6 @@ public class SnakePanel extends JPanel implements ActionListener
             frog.check(playerSnake, mapGenerator.getObstaclesList());
             threadPool.runTask(frog.createRunnable(playerSnake.getBounds()));
             threadPool.runTask(playerSnake);
-            threadPool.join();
             inGame = playerSnake.checkCollisionWithBoard();
             this.checkCollisions();
             if (!inGame)
